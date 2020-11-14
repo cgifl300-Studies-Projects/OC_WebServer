@@ -25,7 +25,7 @@ fun Application.module(testing: Boolean = false) {
 
     routing {
         get("/") {
-            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
+            call.respondText("Welcome to OpenClassrooms brand new server !", contentType = ContentType.Text.Plain)
         }
 
         get("/html-dsl") {
