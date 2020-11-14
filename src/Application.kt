@@ -28,6 +28,15 @@ fun Application.module(testing: Boolean = false) {
             call.respondText("Welcome to OpenClassrooms brand new server !", contentType = ContentType.Text.Plain)
         }
 
+        get("/course/top") {
+            call.respondText("Printing: top 10 courses!", contentType = ContentType.Text.Plain)
+        }
+
+        get("/course/{id}") {
+            val id = call.parameters["id"]
+            call.respondText("Printing: $id course!", contentType = ContentType.Text.Plain)
+        }
+
         get("/html-dsl") {
             call.respondHtml {
                 body {
