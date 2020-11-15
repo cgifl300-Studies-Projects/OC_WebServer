@@ -14,6 +14,10 @@ import io.ktor.features.*
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
+val cours = arrayOf (Course(1, "Cours numéro 1", active = true),
+        Course(2, "Cours numéro 2", active = false),
+        Course(3, "Cours numéro 3", active = false))
+
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
@@ -29,12 +33,32 @@ fun Application.module(testing: Boolean = false) {
         }
 
         get("/course/top") {
-            call.respondText("Printing: top 10 courses!", contentType = ContentType.Text.Plain)
+            // Afficher une réponse Json correspondant au meilleur cours sorti par OpenClassrooms
+            call.respond(mapOf("id" to cours[0].id,
+                    "title" to cours[0].title,
+                    "complexity" to cours[0].complexity,
+                    "active" to cours[0].active))
         }
 
         get("/course/{id}") {
-            val id = call.parameters["id"]
-            call.respondText("Printing: $id course!", contentType = ContentType.Text.Plain)
+            // Afficher les informations d'un cours. Pour la démo, vous devrez gérer uniquement les cours possédant
+            // l'identifiant 1, 2 et 3. Vous renverrez un message d'erreur si d'autres identifiants sont renseignés.
+            val id = call.parameters["id"].toString()
+            var idvalue = 0
+            try {
+                idvalue = id.toInt()
+            }
+            catch (e: NumberFormatException)
+            { idvalue = 0 }
+
+            if ((idvalue > 3) or (idvalue < 1)) {
+                call.respondText("$id course is not avaible", contentType = ContentType.Text.Plain)
+            } else {
+                call.respond(mapOf("id" to cours[idvalue - 1].id,
+                        "title" to cours[idvalue - 1].title,
+                        "complexity" to cours[idvalue - 1].complexity,
+                        "active" to cours[idvalue - 1].active))
+            }
         }
 
         get("/html-dsl") {
