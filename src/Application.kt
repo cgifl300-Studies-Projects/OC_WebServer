@@ -60,37 +60,6 @@ fun Application.module(testing: Boolean = false) {
                         "active" to cours[idvalue - 1].active))
             }
         }
-
-        get("/html-dsl") {
-            call.respondHtml {
-                body {
-                    h1 { +"HTML" }
-                    ul {
-                        for (n in 1..10) {
-                            li { +"$n" }
-                        }
-                    }
-                }
-            }
-        }
-
-        get("/styles.css") {
-            call.respondCss {
-                body {
-                    backgroundColor = Color.red
-                }
-                p {
-                    fontSize = 2.em
-                }
-                rule("p.myclass") {
-                    color = Color.blue
-                }
-            }
-        }
-
-        get("/json/jackson") {
-            call.respond(mapOf("hello" to "world"))
-        }
     }
 }
 
