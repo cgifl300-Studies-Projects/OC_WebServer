@@ -1,20 +1,20 @@
 package com.example
 
+import com.fasterxml.jackson.databind.SerializationFeature
 import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.request.*
-import io.ktor.routing.*
-import io.ktor.http.*
-import io.ktor.html.*
-import kotlinx.html.*
-import kotlinx.css.*
-import com.fasterxml.jackson.databind.*
-import io.ktor.jackson.*
 import io.ktor.features.*
+import io.ktor.http.*
+import io.ktor.jackson.*
+import io.ktor.response.*
+import io.ktor.routing.*
+import kotlinx.css.CSSBuilder
+import kotlinx.html.CommonAttributeGroupFacade
+import kotlinx.html.FlowOrMetaDataContent
+import kotlinx.html.style
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
-val cours = arrayOf (Course(1, "Cours numéro 1", active = true),
+val cours = arrayOf(Course(1, "Cours numéro 1", active = true),
         Course(2, "Cours numéro 2", active = false),
         Course(3, "Cours numéro 3", active = false))
 
@@ -47,9 +47,9 @@ fun Application.module(testing: Boolean = false) {
             var idvalue = 0
             try {
                 idvalue = id.toInt()
+            } catch (e: NumberFormatException) {
+                idvalue = 0
             }
-            catch (e: NumberFormatException)
-            { idvalue = 0 }
 
             if ((idvalue > 3) or (idvalue < 1)) {
                 call.respondText("$id course is not avaible", contentType = ContentType.Text.Plain)
