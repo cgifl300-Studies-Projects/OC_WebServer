@@ -1,3 +1,3 @@
 # OCWebServer  
  
-Final exercice for the OpenClassrooms kotline course.
+Final exercice for the OpenClassrooms kotlin course.
